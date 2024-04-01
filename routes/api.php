@@ -36,17 +36,23 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
 
 
             //registration api
-        Route::get('registration', [RegistrationController::class,'index']);
-        Route::post('registration/create', [RegistrationController::class,'store']);
-        Route::put('registration/update', [RegistrationController::class,'update']);
-        Route::delete('registration/delete/{id?}', [RegistrationController::class,'delete']);
+        Route::prefix('registration')->group(function(){
+                Route::get('/', [RegistrationController::class,'index']);
+                Route::post('/create', [RegistrationController::class,'store']);
+                Route::put('/update', [RegistrationController::class,'update']);
+                Route::delete('/delete/{id?}', [RegistrationController::class,'delete']);     
+        });
+       
 
 
         //Comment api
-        Route::get('comment', [CommentController::class,'index']);
-        Route::post('comment/create', [CommentController::class,'store']);
-        Route::put('comment/update', [CommentController::class,'update']);
-        Route::delete('comment/delete/{id?}', [CommentController::class,'delete']);
+        Route::prefix('comment')->group(function(){
+              Route::get('/', [CommentController::class,'index']);
+              Route::post('/create', [CommentController::class,'store']);
+              Route::put('/update', [CommentController::class,'update']);
+              Route::delete('/delete/{id?}', [CommentController::class,'delete']);  
+        });
+        
 
 
    
@@ -61,31 +67,38 @@ Route::post('login', [AuthController::class, 'login']);
 
 
 //user api
-Route::get('user',[UserController::class,'index']);
-Route::get('user/{id?}',[UserController::class,'show']);
-Route::get('user/comment/{id?}',[UserController::class,'comment']);
-Route::get('user/event/{id?}',[UserController::class,'event']);
-Route::post('user/create', [UserController::class, 'store']);
-Route::put('user/update', [UserController::class, 'update']);
-Route::delete('user/delete/{id?}', [UserController::class, 'delete']);
+Route::prefix('user')->group(function(){
+    Route::get('/',[UserController::class,'index']);
+    Route::get('/{id?}',[UserController::class,'show']);
+    Route::get('/comment/{id?}',[UserController::class,'comment']);
+    Route::get('/event/{id?}',[UserController::class,'event']);
+    Route::post('/create', [UserController::class, 'store']);
+    Route::put('/update', [UserController::class, 'update']);
+    Route::delete('/delete/{id?}', [UserController::class, 'delete']);
+});
 
-
-//role api
-Route::get('role',[RoleController::class,'index']);
-Route::post('role/create', [RoleController::class, 'store']);
-Route::put('role/update', [RoleController::class, 'update']);
-Route::delete('role/delete/{id?}', [RoleController::class, 'delete']);
-
+//role api\
+Route::prefix('role')->group(function(){
+    Route::get('/',[RoleController::class,'index']);
+    Route::post('/create', [RoleController::class, 'store']);
+    Route::put('/update', [RoleController::class, 'update']);
+    Route::delete('/delete/{id?}', [RoleController::class, 'delete']);
+});
 //event api
-Route::get('event',[EventController::class,'index']);
-Route::post('event/create/', [EventController::class, 'store']);
-Route::put('event/update',[EventController::class, 'update']);
-Route::delete('event/delete/{id?}',[EventController::class, 'delete']);
+Route::prefix('event')->group(function(){
+    Route::get('/',[EventController::class,'index']);
+    Route::post('/create/', [EventController::class, 'store']);
+    Route::put('/update',[EventController::class, 'update']);
+    Route::delete('/delete/{id?}',[EventController::class, 'delete']);
+});
 
 
 //feedback api
-Route::get('feedback', [FeedbackController::class,'index']);
-Route::post('feedback/create', [FeedbackController::class,'store']);
-Route::put('feedback/update', [FeedbackController::class,'update']);
-Route::delete('feedback/delete/{id?}', [FeedbackController::class,'delete']);
+Route::prefix('feedback')->group(function(){
+   Route::get('/', [FeedbackController::class,'index']);
+    Route::post('/create', [FeedbackController::class,'store']);
+    Route::put('/update', [FeedbackController::class,'update']);
+    Route::delete('/delete/{id?}', [FeedbackController::class,'delete']); 
+});
+
 
